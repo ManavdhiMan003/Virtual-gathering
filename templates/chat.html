@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="{{ name }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual-Gathering</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link rel="stylesheet" href="static\css\chat.css"></link>
+</head>
+<body onload="start()">
+  <button id="left" onclick="moveLeft()">Left</button>
+  <button id="right" onclick="moveRight()">Right</button>
+  <button id="up" onclick="moveUp()">Up</button>
+  <button id="down" onclick="moveDown()">Down</button>
+  <br>
+  <p>{{name}} your color is: <span id="your_color">|||||</span></p>
+  <textarea id="chat" cols="150" rows="12"></textarea>
+  <br>
+  <input type="text" id="text">
+  <button id="sendbutton" onclick="f()">Send</button>
+  <button id="leavebutton" onclick="leave_room()">Leave Room</button>
+  <!-- <button id="sendbutton" onclick="f()">Send</button> -->
+  <script type="text/javascript" src="static\js\chat.js"></script>
+</body>
+</html>
