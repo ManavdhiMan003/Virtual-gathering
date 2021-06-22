@@ -45,7 +45,7 @@ $(document).ready(function(){
             }
             var newx = other[key].x;
             var newy = other[key].y;
-            console.log(newx,newy);
+            // console.log(newx,newy);
             members[key].x=newx;
             members[key].y=newy;
             members[key].update();
@@ -168,7 +168,7 @@ function updateBattle(){
 }
 function updateBattle2(){
     var name = document.getElementsByTagName('meta')[0].getAttribute('name');
-    console.log("hello");
+    // console.log("hello");
     socket.emit('get_location',{'name':name});
 
 }
