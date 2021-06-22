@@ -17,56 +17,50 @@ $(document).ready(function(){
         socket.emit('joinned',{color:mycolor});
     });
     socket.on('position_change',function(data){
-        // var other = data.hash;
-        var other = data.name;
-        // console.log((other)  , " hahahahh ")
-        if(typeof members[other] == 'undefined'){
-            // continue;
-            // console.log("lancnadclnlcncljdndlncladnclndalncdlcndlcnldcnlkn");   
-            return;
-        }
-        // var newx = other[key].newx;
-        // var newy = other[key].newy;
-        var newx = data.newx;
-        var newy = data.newy;
-        // console.log(other,newx,newy);
-        members[other].x=newx;
-        members[other].y=newy;
-        var name = document.getElementsByTagName('meta')[0].getAttribute('name');
-        // if(name!=other) console.log(other,members[other].newx,members[other].newy);
-        members[other].update();
-        // battlefield.clear();
-        // for (const [key, value] of Object.entries(other)) {
-        //     console.log(key, value);
-        //     if(typeof members[key]=='undefined'){
-        //         continue;
-        //     }
-        //     var newx = other[key].newx;
-        //     var newy = other[key].newy;
-        //     members[key].newx=newx;
-        //     members[key].newy=newy;
-        //     members[key].update();
+        //correct
+        // var other = data.name;
+        // if(typeof members[other] == 'undefined'){  
+        //     return;
         // }
+        // var newx = data.newx;
+        // var newy = data.newy;
+        // members[other].x=newx;
+        // members[other].y=newy;
+        // var name = document.getElementsByTagName('meta')[0].getAttribute('name');
+        // members[other].update();
+        
+        
+        // console.log(data.hash);
+        var other = (JSON.parse(data.hash));
+        // battlefield.clear();
+        // console.log("hllll");
+        // console.log(other)
+        battlefield.clear();
+        for (const key in other) {
+            // console.log(key);
+            // console.log(members[key],key);
+            if(typeof members[key] == 'undefined'){
+                // console.log("oh no")
+                continue;
+            }
+            var newx = other[key].x;
+            var newy = other[key].y;
+            console.log(newx,newy);
+            members[key].x=newx;
+            members[key].y=newy;
+            members[key].update();
+            // console.log("hehe")
+        }
         
 
     });
     socket.on('status',function(data){
-        // while(1){
-        //     console.log(data);
-        // }
         $('#chat').val($('#chat').val()+'<'+data.msg+'>\n');
         $('#chat').scrollTop($('#chat')[0].scrollHeight);
-        // console.log(data.name,data.x,data.y,data.color);
-        // members[data.name]= new component(30,30,10,120,data.color);
-        // console.log("done")
     })
     socket.on('status_join',function(data){
-        // while(1){
-        //     console.log(data);
-        // }
         $('#chat').val($('#chat').val()+'<'+data.msg+'>\n');
         $('#chat').scrollTop($('#chat')[0].scrollHeight);
-        // console.log(data.name,data.x,data.y,data.color);
         var name = document.getElementsByTagName('meta')[0].getAttribute('name');
         if(data.name!=name){
             members[data.name] = new component(30,30,data.x,data.y,data.color);
@@ -112,10 +106,11 @@ function start(){
     $('#your_color').css({'background-color': mycolor});
     startGame(name, mycolor);
     battlefield.start();
-    setInterval(function(){
-        battlefield.clear();  
-        // members[name].update();
-    }, 100);
+    // setInterval(function(){
+    //     battlefield.clear();  
+    //     // members[name].update();
+    // }, 100);
+    setInterval(updateBattle2,5);
 }
 var battlefield ={
     canvas: document.createElement('canvas'),
@@ -168,14 +163,17 @@ class component{
 }
 function updateBattle(){
     var name = document.getElementsByTagName('meta')[0].getAttribute('name');
-    // socket  = io.connect('http://'+document.domain+':'+location.port+'/chat');
     members[name].newPos();
-    // console.log(members[name].x,members[name].y,"hannaan");
     socket.emit('change',{'newx':members[name].x,'newy':members[name].y});
+}
+function updateBattle2(){
+    var name = document.getElementsByTagName('meta')[0].getAttribute('name');
+    console.log("hello");
+    socket.emit('get_location',{'name':name});
+
 }
 function moveUp(){
     var name = document.getElementsByTagName('meta')[0].getAttribute('name');
-    // console.log(name);
     members[name].speedy-=0.1;
 }
 function moveDown(){
