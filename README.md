@@ -19,7 +19,7 @@ pip install virtualenv
 
 - Once installed access the project folder
 ```
-cd Chat-app
+cd Virtual-gathering
 ```
 
 - Create a virtual environment
